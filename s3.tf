@@ -3,7 +3,7 @@ provider "aws" {
   }
 
 resource "aws_s3_bucket" "terraform_state" {
-    bucket = "terraform-up-and-running-state"
+    bucket = "terraform-up-and-running-state-nks"
 
     lifecycle {
         prevent_destroy = true
@@ -30,17 +30,5 @@ resource "aws_dynamodb_table" "terraform_locks" {
   attribute {
     name = "LockID"
     type = "S"
-  }
-  
-}
-
-terraform {
-  backend "s3" {
-    bucket          = "terraform-up-and-running-state"
-    key             = "global/s3/terraform.tfstate"
-    region          = "us-east-2"
-
-    dynamodb_table  = "terraform-up-and-running-locks"
-    encrypt         = true
   }
 }
